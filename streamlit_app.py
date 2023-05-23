@@ -10,4 +10,8 @@ streamlit.text('🐔 平飼い卵の固ゆで')
 streamlit.text('🥑🍞 アボカドトースト')
 streamlit.header('🍌🥭 自分でフルーツスムージーを作ろう 🥝🍇')
 
+# ここに選択リストを置き、含めたい果物を選択できるようにしましょう。
+streamlit.multiselect("Pick some Fruits:", list(my_fruit_list.index)) 
+
+# ページにテーブルを表示します。
 streamlit.dataframe(my_fruit_list)
