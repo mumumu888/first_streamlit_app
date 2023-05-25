@@ -22,21 +22,25 @@ Fruits_to_show = my_fruit_list.loc[fruits_selected]
 # ページにテーブルを表示します。
 streamlit.dataframe(Fruits_to_show)
 
+#create the repeatable code block(called a function)
+def get_fruitvice_data(this_fruit_choice):
+  #import requests
+  fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + this_fruit_choice) 
+  # write your own comment -what does the next line do? 
+  fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
+  return fruityvice_normalized
+ 
 streamlit.header("フルーティバイス フルーツアドバイス!")
 try:
   fruit_choice = streamlit.text_input('What fruit would you like information about?')
   if not fruit_choice:
     streamlit.error("Please select a fruit to get information.")
   else:
+        back_from_function = get_fruitvice_data(fruit_choice)
+        streamlit.dataframe(back_from_function)
 
-    #import requests
-    fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice) 
-    # write your own comment -what does the next line do? 
-    fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
-    # write your own comment - what does this do?
-    streamlit.dataframe(fruityvice_normalized)
 except URLError as e:
-  streamlit.error()
+streamlit.error()
   
 #don't run anything past here while we troubleshoot
 streamlit.stop()
